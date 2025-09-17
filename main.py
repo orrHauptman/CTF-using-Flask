@@ -54,7 +54,14 @@ def send_UDP_packet(message : str):
     client.connect(("127.0.0.1" ,9912 ))
     client.send(message.encode())
 
+#stage 3 
+@app.route("/711")
+def fake_stage3():
+    return "You need to be in the night_shift directory"
 
+@app.route("/night_shift/711")
+def stage3():
+    return render_template("in_development.html")
 
 if __name__ == "__main__":
     app.run()
