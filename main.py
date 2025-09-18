@@ -49,19 +49,19 @@ def stage2():
     
     return "The night shift starts at 5:00 and ends in 6:00 "
 
-
+#stage 3
 def send_UDP_packet(message : str):
     client = socket.socket(socket.AF_INET ,socket.SOCK_DGRAM)
     client.connect(("127.0.0.1" ,9912 ))
     client.send(message.encode())
 
-#stage 3 
+#stage 4 
 @app.route("/711")
-def fake_stage3():
+def fake_stage4():
     return "You need to be in the night_shift directory"
 
 @app.route("/night_shift/711" , methods = ["POST" , "GET"])
-def stage3():
+def stage4():
 
     if request.method == "POST":
         user_password = request.form["password"]
@@ -79,7 +79,7 @@ def stage3():
 def check_password():
     if "pass" in session and session["pass"]:
         return render_template("in_development.html")
-    return redirect(url_for("stage3"))
+    return redirect(url_for("stage4"))
 
 if __name__ == "__main__":
     app.run(debug=True)
