@@ -1,6 +1,6 @@
 from flask import Flask , request , render_template , redirect , url_for , session
 import base64
-from datetime import datetime
+from datetime import datetime , timedelta
 import socket
 clues: dict = {
     "/ Clue" : base64.b64encode("Well done! But top programers don't need clues!!!!".encode()).decode(),
@@ -10,6 +10,7 @@ clues: dict = {
 
 app = Flask(__name__)
 app.secret_key = "pakscmopdva0dgyv9182762akxzxc1"
+app.permanent_session_lifetime = timedelta(minutes= 5)
 
 def get_path():
     url = request.url
@@ -64,6 +65,7 @@ def fake_stage4():
 def stage4():
 
     if request.method == "POST":
+        session.permanent = True
         user_password = request.form["password"]
         if user_password == "91245":
             session["pass"] = True
