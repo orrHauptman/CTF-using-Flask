@@ -64,5 +64,5 @@ def stage3():
     return render_template("in_development.html")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 

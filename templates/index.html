@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
+{%extends "base.html"%}
+{%block body%}
 
-<head>
-    <title>PrintUrl CTF  - create by Orr Hauptman</title>
-</head>
-<body>
-    <h1> This app will print the current url</h1>
-    <p>Do you think you can hack it??? </p>
-    <p style="color: darkblue;">Try Me!</p>
-    <p>Clue: {{fake_clue}} </p>
+<h1> This app will print the current url</h1>
+<p>Do you think you can hack it??? </p>
+<p style="color: darkblue;">Try Me!</p>
+<p>Clue: {{fake_clue}} </p>
+<script>{{real_clue}}; </script>
 
-    <script>{{real_clue}}; </script>
-
-
-</body>
-
-
-</html>
+{%endblock%}
