@@ -1,4 +1,4 @@
-from flask import Flask , request , render_template
+from flask import Flask , request , render_template , redirect , url_for
 import base64
 from datetime import datetime
 import socket
@@ -59,9 +59,21 @@ def send_UDP_packet(message : str):
 def fake_stage3():
     return "You need to be in the night_shift directory"
 
-@app.route("/night_shift/711")
+@app.route("/night_shift/711" , methods = ["POST" , "GET"])
 def stage3():
-    return render_template("in_development.html")
+
+    if request.method == "POST":
+        user_password = request.form["password"]
+        return redirect(url_for("enter_password" , password = user_password ))
+    else:
+        return render_template("password.html")
+
+@app.route("/night_shift/pass/<password>")
+def enter_password(password):
+    if password == "91245":
+        return render_template("in_development.html")
+    return "NOPE!"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
