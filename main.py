@@ -1,4 +1,4 @@
-from flask import Flask , request , render_template , redirect , url_for
+from flask import Flask , request , render_template , redirect , url_for , session
 import base64
 from datetime import datetime
 import socket
@@ -9,6 +9,7 @@ clues: dict = {
 
 
 app = Flask(__name__)
+app.secret_key = "pakscmopdva0dgyv9182762akxzxc1"
 
 def get_path():
     url = request.url
@@ -64,16 +65,21 @@ def stage3():
 
     if request.method == "POST":
         user_password = request.form["password"]
-        return redirect(url_for("enter_password" , password = user_password ))
-    else:
-        return render_template("password.html")
+        if user_password == "91245":
+            session["pass"] = True
+        else:
+            session["pass"] = False
 
-@app.route("/night_shift/pass/<password>")
-def enter_password(password):
-    if password == "91245":
+        return redirect(url_for("check_password" ))
+    
+    return render_template("password.html")
+
+
+@app.route("/night_shift/pass")
+def check_password():
+    if "pass" in session and session["pass"]:
         return render_template("in_development.html")
-    return "NOPE!"
-
+    return redirect(url_for("stage3"))
 
 if __name__ == "__main__":
     app.run(debug=True)
