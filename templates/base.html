@@ -5,6 +5,20 @@
     <title>PrintUrl CTF  - create by Orr Hauptman</title>
 </head>
 <body>
+    {%with messages = get_flashed_messages(with_categories=true)%}
+        {%if messages%}
+            {%for category, msg  in messages%}
+                {%if category == "error"%}
+                    <p style="color: red;background-color: black ;"> {{msg}} </p>
+                {%elif category == "success"%}
+                    <p style="color: lightgreen;background-color: black ;"> {{msg}} </p>
+                {%else%}
+                    <p style="color: lightskyblue;background-color: black ;"> {{msg}} </p>
+                {%endif%}
+            {%endfor%}
+        {%endif%}
+    {%endwith%}
+    
     {%block body%}
     {%endblock%}
 

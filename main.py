@@ -1,4 +1,4 @@
-from flask import Flask , request , render_template , redirect , url_for , session
+from flask import Flask , request , render_template , redirect , url_for , session , flash
 import base64
 from datetime import datetime , timedelta
 import socket
@@ -68,19 +68,27 @@ def stage4():
         session.permanent = True
         user_password = request.form["password"]
         if user_password == "91245":
-            session["pass"] = True
-        else:
-            session["pass"] = False
+            session["psw"] = True
+            flash("You have completed stage 4!" , "success")
+            return render_template("in_development.html")
+        session["psw"] = False
+        flash("Incorrect password" , "error")
+        return render_template("password.html")
 
-        return redirect(url_for("check_password" ))
     
     return render_template("password.html")
 
 
 @app.route("/night_shift/pass")
 def check_password():
-    if "pass" in session and session["pass"]:
-        return render_template("in_development.html")
+    if "psw" in session :
+        if session["psw"]:
+            flash("You have entered the correct password earlier" , "info")
+            return render_template("in_development.html")
+        flash("The password you entered was incorrect" , "error")
+        return redirect(url_for("stage4"))
+    
+    flash("You need to enter the password" , "error")
     return redirect(url_for("stage4"))
 
 if __name__ == "__main__":
